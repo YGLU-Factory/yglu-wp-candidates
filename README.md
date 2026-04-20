@@ -1,6 +1,6 @@
-# Plugin YGLU e-commerce para WordPress
+# Plugin YGLU base para WordPress
 
-Este plugin permite conectar un sitio web con WordPress + WooCommerce a YGLU para sincronizar pedidos, generar facturas, albaranes y más.
+Este plugin es una base que permite conectar un sitio web Wordpress con YGLU.
 
 ## Iniciar WordPress localmente con Docker
 ```sh
