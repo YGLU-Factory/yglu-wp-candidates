@@ -1,3 +1,4 @@
 wordpress/
 target/
 .docker/db*
+.env
