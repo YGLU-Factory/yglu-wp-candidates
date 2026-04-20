@@ -7,9 +7,9 @@ add_action("admin_menu", "yg_add_menu");
 function yg_add_menu()
 {
     add_menu_page(
-        "YGLU e-commerce", // Título de la página
-        "YGLU e-commerce", // Título del side menu
-        "manage_yglu_ecommerce", // Permiso
+        "YGLU", // Título de la página
+        "YGLU", // Título del side menu
+        "manage_yglu", // Permiso
         YG_PLUGIN_SLUG, // Link (slug) del side menu
         "yg_render_admin_page", // Función que devolverá contenido a renderizar en la página
         file_get_contents(YG_PLUGIN_PATH . '/assets/logo.b64'), // Icono del side menu
@@ -27,21 +27,21 @@ function yg_add_capability()
 
     foreach ($roles as $role) {
         $role = get_role($role);
-        $role->add_cap("manage_yglu_ecommerce");
+        $role->add_cap("manage_yglu");
     }
 }
 
 /**
  *
  */
-function yge_render_admin_page()
+function yg_render_admin_page()
 {
 ?>
     <div class="wrap">
-        <h1>YGLU Woocommerce Settings</h1>
+        <h1>YGLU Settings</h1>
         <form method="post" action="options.php">
             <?php
-            settings_fields('yge_settings'); // Crear el grupo de ajustes para YGLU Woocommerce
+            settings_fields('yg_settings'); // Crear el grupo de ajustes para YGLU
             do_settings_sections(YG_PLUGIN_SLUG); // Renderiza todas las secciones que se hayan agregado a la página del slug del plugin
             submit_button();
             ?>
