@@ -1,42 +1,40 @@
 <?php
 /**
-* Plugin Name: My Plugin
-* Plugin URI: https://vojay.de/
-* Description: Boilerplate to develop your own WordPress plugin
+* Plugin Name: YGLU
+* Plugin URI: https://tuyglu.com/
+* Description: Conecta su sitio a YGLU
 * Version: 0.1
-* Author: Volker Janz
-* Author URI: https://vojay.de/
+* Author: YGLU Factory
+* Author URI: https://tuyglu.com/
 **/
 
-// global variables for your plugin
-define("MY_PLUGIN_PATH", plugin_dir_path(__FILE__));
-define("MY_PLUGIN_URL", plugin_dir_url(__FILE__));
-define("MY_PLUGIN_SLUG", "my-plugin");
+define("YG_PLUGIN_PATH", plugin_dir_path(__FILE__));
+define("YG_PLUGIN_URL", plugin_dir_url(__FILE__));
+define("YG_PLUGIN_SLUG", "yglu-ecommerce");
 
-require_once MY_PLUGIN_PATH . "admin.php";
+require_once YG_PLUGIN_PATH . "admin.php";
 
-register_activation_hook(__FILE__, "setup_db");
+register_activation_hook(__FILE__, "activatePlugin");
+function activatePlugin() {
 
-function setup_db() {
-    // database setup code
 }
 
 function get_url($file) {
-    return MY_PLUGIN_URL . $file;
+    return YG_PLUGIN_URL . $file;
 }
 
 function get_path($file) {
-    return MY_PLUGIN_PATH . $file;
+    return YG_PLUGIN_PATH . $file;
 }
 
-function enqueue_my_styles() {
-    wp_enqueue_style("my-style", get_url("style.css"), array(), filemtime(get_path("style.css")));
+function enqueue_yg_styles() {
+    wp_enqueue_style("yg-style", get_url("style.css"), array(), filemtime(get_path("style.css")));
 }
 
-function enqueue_my_scripts() {
-    wp_enqueue_script("my-script", get_url("script.js"), array("jquery"), filemtime(get_path("script.js")));
+function enqueue_yg_scripts() {
+    wp_enqueue_script("yg-script", get_url("script.js"), array("jquery"), filemtime(get_path("script.js")));
 }
 
-add_action("wp_enqueue_scripts", "enqueue_my_styles");
-add_action("wp_enqueue_scripts", "enqueue_my_scripts");
+add_action("wp_enqueue_scripts", "enqueue_yg_styles");
+add_action("wp_enqueue_scripts", "enqueue_yg_scripts");
 
