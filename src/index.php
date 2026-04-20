@@ -1,11 +1,13 @@
 <?php
+
 /**
-* Plugin Name: YGLU
+* Plugin Name: YGLU Candidatos
 * Plugin URI: https://tuyglu.com/
-* Description: Conecta su sitio a YGLU
+* Description: Envía las candidaturas de empleados a YGLU.
 * Version: 0.1
 * Author: YGLU Factory
 * Author URI: https://tuyglu.com/
+* Requires Plugins: contact-form-7
 **/
 
 define("YG_PLUGIN_PATH", plugin_dir_path(__FILE__));

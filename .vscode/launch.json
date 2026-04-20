@@ -10,7 +10,7 @@
             "request": "launch",
             "port": 9004,
             "pathMappings": {
-                "/var/www/html/wp-content/plugins/yglu-wp-boilerplate": "${workspaceFolder}/src"
+                "/var/www/html/wp-content/plugins/yglu-wp-candidates": "${workspaceFolder}/src"
             },
         },
         {
