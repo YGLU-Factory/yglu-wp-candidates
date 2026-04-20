@@ -13,6 +13,31 @@ class ApiService
     }
 
     /**
+     * Get the API key from WordPress options
+     *
+     * @return string|null
+     */
+    protected static function getApiKey()
+    {
+        return get_option('yg_api_key');
+    }
+
+    /**
+     * Add API key header to request headers if available
+     *
+     * @param array $headers
+     * @return array
+     */
+    protected static function addApiKeyHeader($headers = [])
+    {
+        $api_key = self::getApiKey();
+        if (!empty($api_key)) {
+            $headers['Apikey'] = $api_key;
+        }
+        return $headers;
+    }
+
+    /**
      * Make a GET request to the API
      *
      * @param string $endpoint
@@ -21,6 +46,7 @@ class ApiService
      */
     public static function get($endpoint, $headers = [])
     {
+        $headers = self::addApiKeyHeader($headers);
         $url = self::getBaseURL() . $endpoint;
 
         $args = [
@@ -41,11 +67,68 @@ class ApiService
      */
     public static function post($endpoint, $body = [], $headers = [])
     {
+        $headers = self::addApiKeyHeader($headers);
         $url = self::getBaseURL() . $endpoint;
 
         $args = [
             'method' => 'POST',
             'headers' => $headers,
+            'body' => $body,
+        ];
+
+        return self::makeRequest($url, $args);
+    }
+
+    /**
+     * Make a POST request with file upload
+     *
+     * @param string $endpoint
+     * @param array $data - Regular form data
+     * @param array $files - Array of files in format ['field_name' => '/path/to/file']
+     * @param array $headers
+     * @return array
+     */
+    public static function postWithFiles($endpoint, $data = [], $files = [], $headers = [])
+    {
+        $headers = self::addApiKeyHeader($headers);
+        $url = self::getBaseURL() . $endpoint;
+
+        // Create multipart body for file upload
+        $boundary = '----YGLUFormBoundary' . md5(time());
+
+        $body = '';
+
+        // Add JSON-encoded data as a single field named 'data'
+        $json_data = json_encode($data);
+        $body .= "--{$boundary}\r\n";
+        $body .= "Content-Disposition: form-data; name=\"data\"\r\n";
+        $body .= "Content-Type: application/json\r\n";
+        $body .= "\r\n";
+        $body .= $json_data . "\r\n";
+
+        // Add file fields
+        foreach ($files as $field_name => $file_path) {
+            if (file_exists($file_path)) {
+                $filename = basename($file_path);
+                $mimetype = mime_content_type($file_path) ?: 'application/octet-stream';
+
+                $body .= "--{$boundary}\r\n";
+                $body .= "Content-Disposition: form-data; name=\"{$field_name}\"; filename=\"{$filename}\"\r\n";
+                $body .= "Content-Type: {$mimetype}\r\n";
+                $body .= "\r\n";
+                $body .= file_get_contents($file_path) . "\r\n";
+            }
+        }
+
+        $body .= "--{$boundary}--\r\n";
+
+        $args = [
+            'method' => 'POST',
+            'sslverify' => false,
+            'headers' => [
+                'Content-Type' => "multipart/form-data; boundary={$boundary}",
+                'Content-Length' => strlen($body),
+            ] + $headers, // Merge with additional headers including Apikey
             'body' => $body,
         ];
 
@@ -62,6 +145,7 @@ class ApiService
      */
     public static function put($endpoint, $body = [], $headers = [])
     {
+        $headers = self::addApiKeyHeader($headers);
         $url = self::getBaseURL() . $endpoint;
 
         $args = [
@@ -82,6 +166,7 @@ class ApiService
      */
     public static function delete($endpoint, $headers = [])
     {
+        $headers = self::addApiKeyHeader($headers);
         $url = self::getBaseURL() . $endpoint;
 
         $args = [

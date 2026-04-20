@@ -40,3 +40,8 @@ function enqueue_yg_scripts() {
 add_action("wp_enqueue_scripts", "enqueue_yg_styles");
 add_action("wp_enqueue_scripts", "enqueue_yg_scripts");
 
+require_once YG_PLUGIN_PATH.'includes/class-yglu-candidates.php';
+function yglu_candidates_init() {
+    new YGLUCandidates();
+}
+add_action('plugins_loaded', 'yglu_candidates_init');
