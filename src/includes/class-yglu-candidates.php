@@ -4,13 +4,13 @@ class YGLUCandidates
 {
     public function __construct()
     {
-        add_action('wpcf7_before_send_mail', [$this, 'send_to_external_api'], 10, 1);
+        add_action('wpcf7_before_send_mail', [$this, 'sendCandidate'], 10, 1);
     }
 
 
-    public function send_to_external_api($contact_form)
+    public function sendCandidate($contact_form)
     {
-        $target_form_id = 7;
+        $target_form_id = get_option('yg_form_id');
 
         // Comprobamos si el formulario que se está enviando coincide con el objetivo
         if ($contact_form->id() == $target_form_id) {
@@ -25,21 +25,21 @@ class YGLUCandidates
 
             // Mapear datos
             $payload_data = [
-                "Nombre"        => ($posted_data['your-name'] ?? '') . ' ' . ($posted_data['apellido'] ?? ''),
-                "Cif"           => $posted_data['your-cif'] ?? '',
-                "Email"         => $posted_data['your-email'] ?? '',
-                "Telefono"      => $posted_data['tel-750'] ?? '',
-                "Observaciones" => $posted_data['your-message'] ?? '',
+                "Nombre"        => $posted_data[get_option('yg_fieldname_name')] ?? '',
+                "Cif"           => $posted_data[get_option('yg_fieldname_nif')] ?? '',
+                "Email"         => $posted_data[get_option('yg_fieldname_email')] ?? '',
+                "Telefono"      => $posted_data[get_option('yg_fieldname_phone')] ?? '',
+                "Observaciones" => $posted_data[get_option('yg_fieldname_message')] ?? '',
                 "promoted"      => 0
             ];
 
             // CF7 devuelve un array de rutas: ['/ruta/al/archivo.pdf']
-            if (!empty($uploaded_files['file-274'])) {
-                $paths = (array) $uploaded_files['file-274'];
+            if (!empty($uploaded_files[get_option('yg_fieldname_file')])) {
+                $paths = (array) $uploaded_files[get_option('yg_fieldname_file')];
                 $files = ['cv' => $paths[0]];
             }
 
-            $res = ApiService::postWithFiles('employees/create', $payload_data, $files ?? []);
+           ApiService::postWithFiles('employees/create', $payload_data, $files ?? []);
         }
     }
 }

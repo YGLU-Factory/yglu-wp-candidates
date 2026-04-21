@@ -18,7 +18,25 @@ require_once YG_PLUGIN_PATH . "admin.php";
 
 register_activation_hook(__FILE__, "activatePlugin");
 function activatePlugin() {
+    // TODO esto debería hacerse mediante el formulario de configuración
+    add_option('yg_form_id', '7');
+    add_option('yg_fieldname_name', 'nombre');
+    add_option('yg_fieldname_nif', 'nif');
+    add_option('yg_fieldname_email', 'email');
+    add_option('yg_fieldname_phone', 'telefono');
+    add_option('yg_fieldname_message', 'mensaje');
+    add_option('yg_fieldname_file', 'archivo');
+}
 
+register_deactivation_hook(__FILE__, "deactivatePlugin");
+function deactivatePlugin() {
+    delete_option('yg_form_id');
+    delete_option('yg_fieldname_name');
+    delete_option('yg_fieldname_nif');
+    delete_option('yg_fieldname_email');
+    delete_option('yg_fieldname_phone');
+    delete_option('yg_fieldname_message');
+    delete_option('yg_fieldname_file');
 }
 
 function get_url($file) {
