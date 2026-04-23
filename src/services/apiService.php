@@ -9,7 +9,7 @@ class ApiService
      */
     protected static function getBaseURL()
     {
-        return getenv('YG_API_BASE_URL') ?? 'https://app.tuyglu.com/api/rest/';
+        return 'https://staging.tuyglu.com/api/rest/';
     }
 
     /**

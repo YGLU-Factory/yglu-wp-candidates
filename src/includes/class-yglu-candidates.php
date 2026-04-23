@@ -1,5 +1,7 @@
 <?php
 
+include_once dirname(dirname(__FILE__)) . '/services/apiService.php';
+
 class YGLUCandidates
 {
     public function __construct()
@@ -39,7 +41,7 @@ class YGLUCandidates
                 $files = ['cv' => $paths[0]];
             }
 
-           ApiService::postWithFiles('employees/create', $payload_data, $files ?? []);
+           \ApiService::postWithFiles('employees/create', $payload_data, $files ?? []);
         }
     }
 }
