@@ -19,7 +19,7 @@ class ApiService
      */
     protected static function getApiKey()
     {
-        return get_option('yg_api_key');
+        return get_option('ygwp_api_key');
     }
 
     /**
@@ -124,7 +124,7 @@ class ApiService
 
         $args = [
             'method' => 'POST',
-            'sslverify' => false,
+            'timeout' => 30,
             'headers' => [
                 'Content-Type' => "multipart/form-data; boundary={$boundary}",
                 'Content-Length' => strlen($body),
