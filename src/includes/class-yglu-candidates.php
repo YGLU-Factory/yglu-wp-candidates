@@ -27,7 +27,7 @@ class YGLUCandidates
 
             // Mapear datos
             $payload_data = [
-                "Nombre"        => $posted_data[get_option('yg_fieldname_name')] ?? '',
+                "Nombre"        => ($posted_data[get_option('yg_fieldname_name')] ?? '') . ($posted_data[get_option('yg_fieldname_surname')] ?? ''),
                 "Cif"           => $posted_data[get_option('yg_fieldname_nif')] ?? '',
                 "Email"         => $posted_data[get_option('yg_fieldname_email')] ?? '',
                 "Telefono"      => $posted_data[get_option('yg_fieldname_phone')] ?? '',

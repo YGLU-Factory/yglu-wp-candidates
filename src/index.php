@@ -19,6 +19,7 @@ function ygca_activate_plugin() {
     // TODO esto debería hacerse mediante el formulario de configuración
     add_option('yg_form_id', '7');
     add_option('yg_fieldname_name', 'nombre');
+    add_option('yg_fieldname_surname', 'apellidos');
     add_option('yg_fieldname_nif', 'nif');
     add_option('yg_fieldname_email', 'email');
     add_option('yg_fieldname_phone', 'telefono');
@@ -30,6 +31,7 @@ register_deactivation_hook(__FILE__, "ygca_deactivate_plugin");
 function ygca_deactivate_plugin() {
     delete_option('yg_form_id');
     delete_option('yg_fieldname_name');
+    delete_option('yg_fieldname_surname');
     delete_option('yg_fieldname_nif');
     delete_option('yg_fieldname_email');
     delete_option('yg_fieldname_phone');
