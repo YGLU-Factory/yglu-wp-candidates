@@ -32,6 +32,7 @@ class YGLUCandidates
                 "Email"         => $posted_data[get_option('yg_fieldname_email')] ?? '',
                 "Telefono"      => $posted_data[get_option('yg_fieldname_phone')] ?? '',
                 "Observaciones" => $posted_data[get_option('yg_fieldname_message')] ?? '',
+                "observations2" => $posted_data[get_option('yg_fieldname_departments')] ?? '',
                 "promoted"      => 0
             ];
 

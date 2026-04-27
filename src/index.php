@@ -4,7 +4,7 @@
 * Plugin Name: YGLU Candidatos
 * Plugin URI: https://tuyglu.com/
 * Description: Envía las candidaturas de empleados a YGLU.
-* Version: 0.1
+* Version: 1.0
 * Author: YGLU Factory
 * Author URI: https://tuyglu.com/
 * Requires Plugins: contact-form-7, yglu-wp
@@ -23,6 +23,7 @@ function ygca_activate_plugin() {
     add_option('yg_fieldname_nif', 'nif');
     add_option('yg_fieldname_email', 'email');
     add_option('yg_fieldname_phone', 'telefono');
+    add_option('yg_fieldname_departments', 'departamentos');
     add_option('yg_fieldname_message', 'mensaje');
     add_option('yg_fieldname_file', 'archivo');
 }
@@ -35,6 +36,7 @@ function ygca_deactivate_plugin() {
     delete_option('yg_fieldname_nif');
     delete_option('yg_fieldname_email');
     delete_option('yg_fieldname_phone');
+    delete_option('yg_fieldname_departments');
     delete_option('yg_fieldname_message');
     delete_option('yg_fieldname_file');
 }
